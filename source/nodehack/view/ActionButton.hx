@@ -18,21 +18,31 @@ class ActionButton extends FlxSpriteGroup
 	
 	var _action:Action;
 	
-	var _bg:FlxSprite;
+	public var box:FlxSprite;
 	var _nameTxt:FlxText;
 	
 	public function new(action:Action) 
 	{
 		super();
 		
-		_bg = new FlxSprite();
-		_bg.makeGraphic(Math.round(size.x), Math.round(size.y), Color.LIGHT);
-		add(_bg);
+		_action = action;
+		
+		box = new FlxSprite();
+		box.makeGraphic(Math.round(size.x), Math.round(size.y), Color.LIGHT);
+		add(box);
 		
 		_nameTxt = new FlxText(10, 10, 0, action.name, Constants.UI_FONTSIZE);
 		_nameTxt.font = Constants.UI_FONT;
 		_nameTxt.color = Color.DARKEST;
 		add(_nameTxt);
+	}
+	
+	public function buttonClicked()
+	{
+		if (_action != null && _action.event != null)
+		{
+			_action.event();
+		}
 	}
 	
 	

@@ -8,6 +8,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxColor;
 import flixel.util.FlxPoint;
+import nodehack.model.Action;
 import nodehack.model.Node;
 import nodehack.model.NodeConnection;
 import nodehack.model.Server;
@@ -36,6 +37,11 @@ class CyberspaceState extends FlxState
 	
 	var _selectedNode:Int;
 	
+	
+	var _bypassAction:Action;
+	var _deleteAction:Action;
+	var _connectAction:Action;
+	
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -53,6 +59,12 @@ class CyberspaceState extends FlxState
 		add(_nodeLayer);
 		add(_uiLayer);
 		
+		_bypassAction = new Action("Bypass");
+		_bypassAction.event = function() CyberspaceController.makeBypassAttempt(_selectedNode);
+		_deleteAction = new Action("Delete");
+		_deleteAction.event = function() CyberspaceController.makeDeleteAttempt(_selectedNode);
+		_connectAction = new Action("Connect");
+		_connectAction.event = function() CyberspaceController.connectNode(_selectedNode);
 		
 		_ui = new CyberspaceUI();
 		_uiLayer.add(_ui);
@@ -82,7 +94,7 @@ class CyberspaceState extends FlxState
 		_nodeSprites.push(sprite);
 	}
 	
-	private function redrawServer()
+	public function redrawServer()
 	{
 		for (node in _nodeSprites)
 		{
@@ -94,6 +106,7 @@ class CyberspaceState extends FlxState
 				drawNodeConnection(connection);
 		}
 		_ui.updateSelectedNode(CyberspaceController.getServer().nodes[_selectedNode]);
+		refreshActionButtons();
 	}
 	
 	private function drawNodeConnection(connection:NodeConnection)
@@ -128,7 +141,7 @@ class CyberspaceState extends FlxState
 			if (!CyberspaceController.getServer().nodes[_selectedNode].connected)
 			{
 				CyberspaceController.connectNode(_selectedNode);
-				redrawServer();
+				//redrawServer();
 			}
 		}
 	}
@@ -160,6 +173,22 @@ class CyberspaceState extends FlxState
 		_nodeSprites[_selectedNode].setSelected(true);
 		
 		_ui.updateSelectedNode(CyberspaceController.getServer().nodes[_selectedNode]);
+		refreshActionButtons();
+	}
+	
+	private function refreshActionButtons()
+	{
+		_ui.clearActionButtons();
+		
+		if (CyberspaceController.getServer().nodes[_selectedNode].connected)
+		{
+			_ui.addActionButton(_bypassAction, 20, FlxG.height - 110);
+			_ui.addActionButton(_deleteAction, 20, FlxG.height - 55);
+		}
+		else
+		{
+			_ui.addActionButton(_connectAction, 20, FlxG.height - 110);
+		}
 	}
 	
 }

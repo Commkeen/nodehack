@@ -6,6 +6,7 @@ import flixel.text.FlxText;
 import nodehack.Color;
 import nodehack.model.Action;
 import nodehack.model.Node;
+import nodehack.controller.CyberspaceController;
 
 /**
  * ...
@@ -17,7 +18,7 @@ class CyberspaceUI extends FlxSpriteGroup
 	var _bottomPanelBg:FlxSprite;
 	var _rightPanelBg:FlxSprite;
 	
-	var _actionButtons:Array<ActionButton>;
+	var _actionButtons:Array<ActionButton> = new Array<ActionButton>();
 	
 	var _bypassTimeCost:FlxText = new FlxText();
 	var _deleteTimeCost:FlxText = new FlxText();
@@ -51,14 +52,14 @@ class CyberspaceUI extends FlxSpriteGroup
 		_iceOverview = new IceOverviewPanel();
 		add(_iceOverview);
 		
-		var testAction:Action = new Action("Bypass");
-		var testAction2:Action = new Action("Delete");
-		var actionSprite:ActionButton = new ActionButton(testAction);
-		add(actionSprite);
-		actionSprite.setPosition(20, FlxG.height - 110);
-		var actionSprite2:ActionButton = new ActionButton(testAction2);
-		add(actionSprite2);
-		actionSprite2.setPosition(20, FlxG.height - 55);
+		//var testAction:Action = new Action("Bypass");
+		//var testAction2:Action = new Action("Delete");
+		//var actionSprite:ActionButton = new ActionButton(testAction);
+		//add(actionSprite);
+		//actionSprite.setPosition(20, FlxG.height - 110);
+		//var actionSprite2:ActionButton = new ActionButton(testAction2);
+		//add(actionSprite2);
+		//actionSprite2.setPosition(20, FlxG.height - 55);
 		
 		_bypassTimeCost = new FlxText(140, FlxG.height - 110, 0, "5 T", Constants.UI_FONTSIZE);
 		_bypassTimeCost.font = Constants.UI_FONT;
@@ -72,14 +73,42 @@ class CyberspaceUI extends FlxSpriteGroup
 		add(_deleteCodeCost);
 		
 		_timeBar = new TimeBar();
-		_timeBar.setTime(600);
+		_timeBar.setMaxTime(CyberspaceController.getTime());
+		_timeBar.setTime(CyberspaceController.getTime());
 		add(_timeBar);
+	}
+	
+	public function addActionButton(action:Action, x:Int, y:Int)
+	{
+		var button = new ActionButton(action);
+		button.setPosition(x,y);
+		add(button);
+		_actionButtons.push(button);
+	}
+	
+	public function clearActionButtons()
+	{
+		while (_actionButtons.length != 0)
+		{
+			remove(_actionButtons.pop());
+		}
 	}
 	
 	override public function update():Void 
 	{
 		super.update();
 		_mousePos.text = "X: " + FlxG.mouse.screenX + " Y: " + FlxG.mouse.screenY;
+		if (FlxG.mouse.justPressed)
+		{
+			for (index in 0..._actionButtons.length)
+			{
+				if (_actionButtons[index].box.overlapsPoint(FlxG.mouse.getScreenPosition()))
+				{
+					_actionButtons[index].buttonClicked();
+				}
+			}
+		}
+		_timeBar.setTime(CyberspaceController.getTime());
 	}
 	
 	public function updateSelectedNode(node:Node)

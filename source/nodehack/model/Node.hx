@@ -23,6 +23,7 @@ class Node
 		this.ice = ice;
 		this.connected = false;
 		this.visible = false;
+		this.access = EAccess.NONE;
 	}
 	
 }

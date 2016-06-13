@@ -4,6 +4,7 @@ import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxPoint;
 import nodehack.model.Node;
+import nodehack.Enums;
 
 /**
  * ...
@@ -49,7 +50,12 @@ class NodeOverviewPanel extends FlxSpriteGroup
 		
 		visible = true;
 		_name.text = node.name;
-		_access.text = "Access: None";
+		_access.text = "Access: ";
+		switch node.access {
+			case EAccess.NONE: _access.text += "None";
+			case EAccess.USER: _access.text += "User";
+			case EAccess.ROOT: _access.text += "Root";
+		}
 	}
 	
 }

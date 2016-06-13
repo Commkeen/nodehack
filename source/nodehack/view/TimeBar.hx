@@ -54,7 +54,7 @@ class TimeBar extends FlxSpriteGroup
 		var fill:FillStyle = { color:Color.TRANSPARENT };
 		_outline.drawRect(0, 0, size.x, size.y, Color.TRANSPARENT, line, fill);
 		
-		//_bar.fill(Color.TRANSPARENT);
+		_bar.fill(Color.TRANSPARENT);
 		var barSize:Float = _bar.width;
 		barSize = (time / _maxTime) * barSize;
 		_bar.drawRect(0, 0, barSize, _bar.height, Color.LIGHT);

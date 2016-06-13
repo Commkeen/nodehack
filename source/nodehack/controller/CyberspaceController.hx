@@ -17,6 +17,8 @@ class CyberspaceController
 	public static function initLevel(server:Server)
 	{
 		_server = server;
+		_time = 200;
+		_keys = 3;
 		updateNodeVisibility();
 		_state = new CyberspaceState();
 		FlxG.switchState(_state);
@@ -72,6 +74,7 @@ class CyberspaceController
 	{
 		_server.nodes[index].connected = true;
 		updateNodeVisibility();
+		_state.redrawServer();
 	}
 	
 	public static function setNodeAccess(index:Int, access:EAccess)
@@ -111,6 +114,7 @@ class CyberspaceController
 			removeTime(Constants.BYPASS_FAIL_TIME);
 		}
 		setNodeAccess(nodeIndex, EAccess.USER);
+		_state.redrawServer();
 	}
 	
 	public static function makeDeleteAttempt(nodeIndex:Int)
@@ -122,7 +126,9 @@ class CyberspaceController
 		if (success)
 		{
 			setNodeAccess(nodeIndex, EAccess.ROOT);
+			getServer().nodes[nodeIndex].ice = null;
 		}
+		_state.redrawServer();
 	}
 	
 }
