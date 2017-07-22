@@ -2,7 +2,7 @@ package nodehack.view;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
-import flixel.util.FlxPoint;
+import flixel.math.FlxPoint;
 import nodehack.model.Node;
 import nodehack.Color;
 using flixel.util.FlxSpriteUtil;
@@ -83,8 +83,7 @@ class NodeSprite extends FlxSpriteGroup
 			line.color = Color.LIGHTEST;
 			line.thickness = 10;
 		}
-		var fill:FillStyle = { color:Color.TRANSPARENT };
-		_outline.drawRect(2, 2, size.x - 4, size.y - 4, Color.TRANSPARENT, line, fill);
+		_outline.drawRect(2, 2, size.x - 4, size.y - 4, Color.TRANSPARENT, line);
 		
 		
 		if (!_node.connected)

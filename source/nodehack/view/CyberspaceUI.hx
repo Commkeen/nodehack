@@ -94,9 +94,9 @@ class CyberspaceUI extends FlxSpriteGroup
 		}
 	}
 	
-	override public function update():Void 
+	override public function update(elapsed:Float):Void 
 	{
-		super.update();
+		super.update(elapsed);
 		_mousePos.text = "X: " + FlxG.mouse.screenX + " Y: " + FlxG.mouse.screenY;
 		if (FlxG.mouse.justPressed)
 		{

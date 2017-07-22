@@ -1,5 +1,5 @@
 package nodehack.controller;
-import flixel.util.FlxPoint;
+import flixel.math.FlxPoint;
 import nodehack.model.*;
 
 /**
