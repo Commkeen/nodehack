@@ -19,18 +19,6 @@
 			"type": "hxcpp",
 			"request": "launch",
 			"program": "${workspaceRoot}/export/windows/cpp/bin/Nodehack.exe"
-		},
-		{
-			"name": "Linux",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceRoot}/export/linux64/cpp/bin/Nodehack"
-		},
-		{
-			"name": "Mac",
-			"type": "hxcpp",
-			"request": "launch",
-			"program": "${workspaceRoot}/export/mac64/cpp/bin/Nodehack.app/Contents/MacOS/Nodehack"
 		}
 	]
 }

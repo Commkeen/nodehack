@@ -13,13 +13,16 @@
 			"taskName": "flash debug",
 			"suppressTaskName": true,
 			"args": ["test", "flash", "-debug", "-Dfdb"],
-			"isBuildCommand": true,
 			"problemMatcher": "$haxe"
 		},
 		{
 			"taskName": "flash debug (build only)",
 			"suppressTaskName": true,
 			"args": ["build", "flash", "-debug", "-Dfdb"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"problemMatcher": "$haxe"
 		},
 		{
@@ -80,54 +83,6 @@
 			"taskName": "cpp debug -Dnext",
 			"suppressTaskName": true,
 			"args": ["test", "cpp", "-Dnext", "-debug"],
-			"problemMatcher": "$haxe"
-		},
-		{
-			"taskName": "android debug",
-			"suppressTaskName": true,
-			"args": ["test", "android", "-debug"],
-			"problemMatcher": "$haxe"
-		},
-		{
-			"taskName": "android release",
-			"suppressTaskName": true,
-			"args": ["test", "android"],
-			"problemMatcher": "$haxe"
-		},
-		{
-			"taskName": "android debug -Dnext",
-			"suppressTaskName": true,
-			"args": ["test", "android", "-debug", "-Dnext"],
-			"problemMatcher": "$haxe"
-		},
-		{
-			"taskName": "android release -Dnext",
-			"suppressTaskName": true,
-			"args": ["test", "android", "-Dnext"],
-			"problemMatcher": "$haxe"
-		},
-		{
-			"taskName": "ios debug",
-			"suppressTaskName": true,
-			"args": ["test", "ios", "-debug"],
-			"problemMatcher": "$haxe"
-		},
-		{
-			"taskName": "ios release",
-			"suppressTaskName": true,
-			"args": ["test", "ios"],
-			"problemMatcher": "$haxe"
-		},
-		{
-			"taskName": "ios debug -Dnext",
-			"suppressTaskName": true,
-			"args": ["test", "ios", "-debug", "-Dnext"],
-			"problemMatcher": "$haxe"
-		},
-		{
-			"taskName": "ios release -Dnext",
-			"suppressTaskName": true,
-			"args": ["test", "ios", "-Dnext"],
 			"problemMatcher": "$haxe"
 		}
 	]

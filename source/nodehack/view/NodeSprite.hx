@@ -14,7 +14,7 @@ using flixel.util.FlxSpriteUtil;
 class NodeSprite extends FlxSpriteGroup
 {
 
-	public static var size = new FlxPoint(200, 120);
+	public static var size = new FlxPoint(100, 100);
 	
 	var _node:Node;
 	
@@ -73,7 +73,7 @@ class NodeSprite extends FlxSpriteGroup
 		
 		visible = true;
 		_outline.fill(Color.TRANSPARENT);
-		var line:LineStyle = { color:Color.DARK, thickness:5 };
+		var line:LineStyle = { color:Color.DARK, thickness:3 };
 		if (!_node.connected)
 		{
 			line.color = Color.TRANSPARENT;

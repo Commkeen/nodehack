@@ -16,6 +16,11 @@ class LevelGen
 	
 	public function generateServer(difficulty:Int):Server
 	{
+		return generateFixedServer(difficulty);
+	}
+
+	public function generateFixedServer(difficulty:Int):Server
+	{
 		var server = new Server();
 		server.difficulty = difficulty;
 		server.name = "A Server";
