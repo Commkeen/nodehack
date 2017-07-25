@@ -7,6 +7,7 @@ import flash.events.Event;
 import flash.Lib;
 import flixel.FlxGame;
 import flixel.FlxState;
+import flixel.FlxG;
 import nodehack.controller.GameController;
 
 class Main extends Sprite 
@@ -65,6 +66,7 @@ class Main extends Sprite
 		}
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+		FlxG.autoPause = false;
 		GameController.initGame();
 	}
 }

@@ -25,6 +25,7 @@ class NodeSprite extends FlxSpriteGroup
 	var _accessIcon:FlxSprite;
 	var _programName:FlxText;
 	var _nodeName:FlxText;
+	var _nodeIcon:FlxSprite;
 	
 	public function new(node:Node) 
 	{
@@ -39,7 +40,9 @@ class NodeSprite extends FlxSpriteGroup
 		add(_outline);
 		
 		_accessIcon = new FlxSprite(8, 8);
-		_accessIcon.makeGraphic(8, 8, Color.TRANSPARENT);
+		_accessIcon.loadGraphic("assets/images/icons.png", true, 24, 24);
+		_accessIcon.scale = new FlxPoint(3,3);
+		add(_accessIcon);
 		
 		_nodeName = new FlxText(30, 20, 0, node.name, Constants.UI_FONTSIZE);
 		_nodeName.font = Constants.UI_FONT;

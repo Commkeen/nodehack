@@ -17,6 +17,7 @@ import nodehack.view.NodeSprite;
 import flixel.group.FlxSpriteGroup;
 import nodehack.Color;
 import nodehack.controller.CyberspaceController;
+import nodehack.Enums.EAccess;
 using flixel.util.FlxSpriteUtil;
 
 /**
@@ -109,6 +110,11 @@ class CyberspaceState extends FlxState
 		refreshActionButtons();
 	}
 	
+	public function printLine(msg:String)
+	{
+		_ui.printLine(msg);
+	}
+	
 	private function drawNodeConnection(connection:NodeConnection)
 	{
 		var line:LineStyle = { color:Color.LIGHT, thickness:2 };
@@ -154,7 +160,7 @@ class CyberspaceState extends FlxState
 			var nodeClicked:Bool = false;
 			for (index in 0..._nodeSprites.length)
 			{
-				if (_nodeSprites[index].box.overlapsPoint(FlxG.mouse.getWorldPosition()))
+				if (_nodeSprites[index].box.overlapsPoint(FlxG.mouse.getWorldPosition()) && CyberspaceController.getServer().nodes[index].visible)
 				{
 					nodeClicked = true;
 					selectNode(index);
@@ -179,11 +185,13 @@ class CyberspaceState extends FlxState
 	private function refreshActionButtons()
 	{
 		_ui.clearActionButtons();
-		
-		if (CyberspaceController.getServer().nodes[_selectedNode].connected)
+		var selectedNode = CyberspaceController.getServer().nodes[_selectedNode];
+		if (selectedNode.connected)
 		{
-			_ui.addActionButton(_bypassAction, 20, FlxG.height - 110);
-			_ui.addActionButton(_deleteAction, 20, FlxG.height - 55);
+			if (selectedNode.access == EAccess.NONE)
+				_ui.addActionButton(_bypassAction, 20, FlxG.height - 110);
+			if (selectedNode.access != EAccess.ROOT)
+				_ui.addActionButton(_deleteAction, 20, FlxG.height - 55);
 		}
 		else
 		{

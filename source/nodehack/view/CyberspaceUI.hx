@@ -24,9 +24,11 @@ class CyberspaceUI extends FlxSpriteGroup
 	var _deleteTimeCost:FlxText = new FlxText();
 	var _deleteCodeCost:FlxText = new FlxText();
 	
+	var _messagePanel:MessagePanel;
 	var _nodeOverview:NodeOverviewPanel;
 	var _iceOverview:IceOverviewPanel;
 	var _timeBar:TimeBar;
+	var _keysDisplay:KeysDisplay;
 	var _mousePos:FlxText = new FlxText();
 	
 	public function new() 
@@ -42,6 +44,9 @@ class CyberspaceUI extends FlxSpriteGroup
 		_rightPanelBg = new FlxSprite(FlxG.width - 200, 0);
 		_rightPanelBg.makeGraphic(200, FlxG.height, Color.DARK);
 		add(_rightPanelBg);
+		
+		_messagePanel = new MessagePanel();
+		add(_messagePanel);
 		
 		_mousePos.color = 0xFFFFFFFF;
 		add(_mousePos);
@@ -76,6 +81,10 @@ class CyberspaceUI extends FlxSpriteGroup
 		_timeBar.setMaxTime(CyberspaceController.getTime());
 		_timeBar.setTime(CyberspaceController.getTime());
 		add(_timeBar);
+		
+		_keysDisplay = new KeysDisplay();
+		_keysDisplay.setKeys(CyberspaceController.getKeys());
+		add(_keysDisplay);
 	}
 	
 	public function addActionButton(action:Action, x:Int, y:Int)
@@ -100,15 +109,19 @@ class CyberspaceUI extends FlxSpriteGroup
 		_mousePos.text = "X: " + FlxG.mouse.screenX + " Y: " + FlxG.mouse.screenY;
 		if (FlxG.mouse.justPressed)
 		{
+			var actionButtonPressed = null;
 			for (index in 0..._actionButtons.length)
 			{
 				if (_actionButtons[index].box.overlapsPoint(FlxG.mouse.getScreenPosition()))
 				{
-					_actionButtons[index].buttonClicked();
+					actionButtonPressed = _actionButtons[index];
 				}
 			}
+			if (actionButtonPressed != null)
+				actionButtonPressed.buttonClicked();
 		}
 		_timeBar.setTime(CyberspaceController.getTime());
+		_keysDisplay.setKeys(CyberspaceController.getKeys());
 	}
 	
 	public function updateSelectedNode(node:Node)
@@ -123,6 +136,11 @@ class CyberspaceUI extends FlxSpriteGroup
 			_nodeOverview.updateInfo(node);
 			_iceOverview.updateInfo(node.ice);
 		}
+	}
+	
+	public function printLine(msg:String)
+	{
+		_messagePanel.printLine(msg);
 	}
 	
 	

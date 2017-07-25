@@ -60,9 +60,16 @@ class CyberspaceController
 	
 	private static function updateNodeVisibility()
 	{
+		for (node in _server.nodes)
+		{
+			if (node.connected)
+				node.visible = true;
+		}
+		
 		for (connection in _server.connections)
 		{
-			if (connection.node1.connected || connection.node2.connected)
+			if (connection.node1.connected && connection.node1.access != EAccess.NONE
+				|| connection.node2.connected && connection.node2.access != EAccess.NONE)
 			{
 				connection.node1.visible = true;
 				connection.node2.visible = true;
@@ -73,6 +80,7 @@ class CyberspaceController
 	public static function connectNode(index:Int)
 	{
 		_server.nodes[index].connected = true;
+		_state.printLine("Connection established.");
 		updateNodeVisibility();
 		_state.redrawServer();
 	}
@@ -107,27 +115,46 @@ class CyberspaceController
 	public static function makeBypassAttempt(nodeIndex:Int)
 	{
 		removeTime(Constants.BYPASS_TIME);
+		_state.printLine("Bypassing node.");
 		var successDifficulty = 0.2 * getBypassDifficulty(nodeIndex);
 		var success = Math.random() > successDifficulty;
 		if (!success)
 		{
 			removeTime(Constants.BYPASS_FAIL_TIME);
+			_state.printLine("Initial bypass failure, time lost.");
+		}
+		else
+		{
+			_state.printLine("Bypass successful.");
 		}
 		setNodeAccess(nodeIndex, EAccess.USER);
+		updateNodeVisibility();
 		_state.redrawServer();
 	}
 	
 	public static function makeDeleteAttempt(nodeIndex:Int)
 	{
+		if (getKeys() <= 0)
+		{
+			_state.printLine("Error - Polymorphic encryption key needed.");
+			return;
+		}
 		removeTime(Constants.DELETE_TIME);
 		removeKey();
+		_state.printLine("Attempting to delete ICE.");
 		var successDifficulty = 0.2 * getDeleteDifficulty(nodeIndex);
 		var success = Math.random() > successDifficulty;
 		if (success)
 		{
+			_state.printLine("ICE purged.");
 			setNodeAccess(nodeIndex, EAccess.ROOT);
 			getServer().nodes[nodeIndex].ice = null;
 		}
+		else
+		{
+			_state.printLine("Error - delete failed.");
+		}
+		updateNodeVisibility();
 		_state.redrawServer();
 	}
 	
