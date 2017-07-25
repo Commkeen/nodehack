@@ -1,5 +1,6 @@
 package nodehack.controller;
-import flixel.util.FlxPoint;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRandom;
 import nodehack.model.*;
 
 /**
@@ -9,12 +10,19 @@ import nodehack.model.*;
 class LevelGen
 {
 
+	private var _random:FlxRandom = new FlxRandom();
+
 	public function new() 
 	{
 		
 	}
 	
 	public function generateServer(difficulty:Int):Server
+	{
+		return generateBasicGridServer(difficulty);
+	}
+
+	private function generateFixedServer(difficulty:Int):Server
 	{
 		var server = new Server();
 		server.difficulty = difficulty;
@@ -44,6 +52,44 @@ class LevelGen
 		
 		node.connected = true;
 		
+		return server;
+	}
+
+	private function generateBasicGridServer(difficulty:Int):Server{
+		var server = new Server();
+		server.difficulty = difficulty;
+		server.name = "A name";
+
+		var serversV = 4;
+		var serversH = 6;
+		var spacingV = 130;
+		var spacingH = 130;
+		var topLeft = new FlxPoint(50, 50);
+
+		var i = 0;
+		for (x in 0...serversH)
+		{
+			for (y in 0...serversV)
+			{
+				var node = new Node(new FlxPoint(topLeft.x + x*spacingH, topLeft.y + y*spacingV), "SVR", null);
+				server.nodes.push(node);
+				node.ice = new Ice("Default", _random.int(Std.int(Math.max(1, difficulty-1)), difficulty+1));
+				if (y > 0)
+				{
+					var nodeAbove = server.nodes[i-1];
+					server.connections.push(new NodeConnection(nodeAbove, node));
+				}
+				if (x > 0)
+				{
+					var nodeLeft = server.nodes[i-serversV];
+					server.connections.push(new NodeConnection(nodeLeft, node));
+				}
+				i++;
+			}
+		}
+
+		server.nodes[0].connected = true;
+
 		return server;
 	}
 	

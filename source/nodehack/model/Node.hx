@@ -1,5 +1,5 @@
 package nodehack.model;
-import flixel.util.FlxPoint;
+import flixel.math.FlxPoint;
 import nodehack.Enums.EAccess;
 
 /**

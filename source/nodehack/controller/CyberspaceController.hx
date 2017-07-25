@@ -39,6 +39,18 @@ class CyberspaceController
 		return _time;
 	}
 	
+	public static function getConnectDifficulty(nodeIndex:Int)
+	{
+		var result = 0;
+		var ice = _server.nodes[nodeIndex].ice;
+		if (ice != null)
+		{
+			result = ice.strength;
+			//TODO: modifiers
+		}
+		return result;
+	}
+
 	public static function getBypassDifficulty(nodeIndex:Int)
 	{
 		var result = 0;
@@ -112,6 +124,17 @@ class CyberspaceController
 			_time = 0;
 	}
 	
+	public static function makeConnectAttempt(nodeIndex:Int)
+	{
+		removeTime(Constants.CONNECT_TIME);
+		var successDifficulty = 0.2 * getConnectDifficulty(nodeIndex);
+		var success = Math.random() > successDifficulty;
+		if (success)
+		{
+			connectNode(nodeIndex);
+		}
+	}
+
 	public static function makeBypassAttempt(nodeIndex:Int)
 	{
 		removeTime(Constants.BYPASS_TIME);

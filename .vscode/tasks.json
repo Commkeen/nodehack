@@ -1,0 +1,89 @@
+{
+	"version": "2.0.0",
+	"command": "haxelib",
+	"args": ["run", "lime"],
+	"tasks": [
+		{
+			"taskName": "flash release",
+			"suppressTaskName": true,
+			"args": ["test", "flash"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "flash debug",
+			"suppressTaskName": true,
+			"args": ["test", "flash", "-debug", "-Dfdb"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "flash debug (build only)",
+			"suppressTaskName": true,
+			"args": ["build", "flash", "-debug", "-Dfdb"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "html5 release",
+			"suppressTaskName": true,
+			"args": ["test", "html5"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "html5 debug",
+			"suppressTaskName": true,
+			"args": ["test", "html5", "-debug"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "neko release",
+			"suppressTaskName": true,
+			"args": ["test", "neko"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "neko debug",
+			"suppressTaskName": true,
+			"args": ["test", "neko", "-debug"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "neko release -Dnext",
+			"suppressTaskName": true,
+			"args": ["test", "neko", "-Dnext"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "neko debug -Dnext",
+			"suppressTaskName": true,
+			"args": ["test", "neko", "-debug", "-Dnext"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "cpp release",
+			"suppressTaskName": true,
+			"args": ["test", "cpp"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "cpp debug",
+			"suppressTaskName": true,
+			"args": ["test", "cpp", "-debug"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "cpp release -Dnext",
+			"suppressTaskName": true,
+			"args": ["test", "cpp", "-Dnext"],
+			"problemMatcher": "$haxe"
+		},
+		{
+			"taskName": "cpp debug -Dnext",
+			"suppressTaskName": true,
+			"args": ["test", "cpp", "-Dnext", "-debug"],
+			"problemMatcher": "$haxe"
+		}
+	]
+}

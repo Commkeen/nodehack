@@ -1,0 +1,26 @@
+{
+	"haxe.displayConfigurations": [
+		["export/flash/haxe/debug.hxml"],
+		["export/flash/haxe/release.hxml"],
+		["export/html5/haxe/debug.hxml"],
+		["export/html5/haxe/release.hxml"],
+		["export/windows/cpp/haxe/debug.hxml"],
+		["export/windows/cpp/haxe/release.hxml"],
+		["export/windows/neko/haxe/debug.hxml"],
+		["export/windows/neko/haxe/release.hxml"]
+	],
+	"haxe.displayServer": {
+		"arguments": [
+			"-v"
+		]
+	},
+	"haxe.diagnosticsPathFilter": "${workspaceRoot}/source",
+	"search.exclude": {
+		"export/**/*.hx": true
+	},
+	"codedox": {
+		"commentdescription": "\n",
+		"paramFormat": "@param   ${name} ",
+		"returnFormat": "@return  ${type}"
+	}
+}

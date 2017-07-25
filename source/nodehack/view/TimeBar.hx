@@ -2,7 +2,7 @@ package nodehack.view;
 import flixel.group.FlxSpriteGroup;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
-import flixel.util.FlxPoint;
+import flixel.math.FlxPoint;
 using flixel.util.FlxSpriteUtil;
 
 /**
@@ -51,8 +51,7 @@ class TimeBar extends FlxSpriteGroup
 		_txt.text = "" + time;
 		
 		var line:LineStyle = { color:Color.LIGHT, thickness:4 };
-		var fill:FillStyle = { color:Color.TRANSPARENT };
-		_outline.drawRect(0, 0, size.x, size.y, Color.TRANSPARENT, line, fill);
+		_outline.drawRect(0, 0, size.x, size.y, Color.TRANSPARENT, line);
 		
 		_bar.fill(Color.TRANSPARENT);
 		var barSize:Float = _bar.width;
