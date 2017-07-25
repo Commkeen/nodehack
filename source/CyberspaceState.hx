@@ -149,16 +149,16 @@ class CyberspaceState extends FlxState
 	//Check whether user has clicked any nodes
 	private function updateMouse()
 	{
-		if (FlxG.mouse.justPressed)
+		for (index in 0..._nodeSprites.length)
 		{
-			var nodeClicked:Bool = false;
-			for (index in 0..._nodeSprites.length)
+			if (_nodeSprites[index].box.overlapsPoint(FlxG.mouse.getWorldPosition()))
 			{
-				if (_nodeSprites[index].box.overlapsPoint(FlxG.mouse.getWorldPosition()))
+				selectNode(index);
+				if (FlxG.mouse.justPressed)
 				{
-					nodeClicked = true;
-					selectNode(index);
+					CyberspaceController.makeConnectAttempt(index);
 				}
+				
 			}
 		}
 	}

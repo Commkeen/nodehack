@@ -23,7 +23,7 @@ class NodeSprite extends FlxSpriteGroup
 	public var box:FlxSprite;
 	var _outline:FlxSprite;
 	var _accessIcon:FlxSprite;
-	var _programName:FlxText;
+	var _nodeStrength:FlxText;
 	var _nodeName:FlxText;
 	
 	public function new(node:Node) 
@@ -46,13 +46,13 @@ class NodeSprite extends FlxSpriteGroup
 		_nodeName.color = Color.DARKEST;
 		add(_nodeName);
 		
-		_programName = new FlxText(30, 50, 0, "", Constants.UI_FONTSIZE);
-		_programName.font = Constants.UI_FONT;
-		_programName.color = Color.DARKEST;
-		add(_programName);
+		_nodeStrength = new FlxText(30, 50, 0, "", Constants.UI_FONTSIZE);
+		_nodeStrength.font = Constants.UI_FONT;
+		_nodeStrength.color = Color.DARKEST;
+		add(_nodeStrength);
 		
 		if (node.ice != null)
-			_programName.text = node.ice.name;
+			_nodeStrength.text = "" + node.ice.strength;
 		
 		redraw();
 	}
@@ -89,12 +89,12 @@ class NodeSprite extends FlxSpriteGroup
 		if (!_node.connected)
 		{
 			_nodeName.visible = false;
-			_programName.visible = false;
+			_nodeStrength.visible = true;
 		}
 		else
 		{
 			_nodeName.visible = true;
-			_programName.visible = true;
+			_nodeStrength.visible = false;
 		}
 	}
 	
