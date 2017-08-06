@@ -105,10 +105,10 @@ class LevelGen
 			throw "SOMETHING IN LEVEL GEN WENT HORRIBLY WRONG!";
 		}
 
-		//Get random connections, knock them out, if we can't reach the exit, put them back
+		//Get random connections, knock them out, if we can't reach a node, put them back
 		var connectionsRemoved = 0;
 		var failures = 0;
-		while (connectionsRemoved < server.nodes.length * 2 && failures < 50)
+		while (connectionsRemoved < server.nodes.length * 3 && failures < 50)
 		{
 			var randomConnection = server.connections[_random.int(0,server.connections.length-1)];
 			server.connections.remove(randomConnection);
