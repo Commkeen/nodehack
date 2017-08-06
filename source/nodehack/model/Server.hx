@@ -20,5 +20,23 @@ class Server
 		nodes = new Array<Node>();
 		connections = new Array<NodeConnection>();
 	}
+
+	public function getAdjacentNodes(node:Node):Array<Node>
+	{
+		var result = new Array<Node>();
+		for (connection in connections)
+		{
+			if (connection.node1 == node)
+			{
+				result.push(connection.node2);
+			}
+			if (connection.node2 == node)
+			{
+				result.push(connection.node1);
+			}
+		}
+
+		return result;
+	}
 	
 }

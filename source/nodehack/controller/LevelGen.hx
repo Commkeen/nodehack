@@ -91,6 +91,11 @@ class LevelGen
 
 		server.nodes[0].connected = true;
 		server.nodes[0].access = Enums.EAccess.ROOT;
+		server.nodes[0].type = Enums.ENodeType.ENTRANCE;
+		server.nodes[0].name = "PORT";
+
+		server.nodes[server.nodes.length - 3].type = Enums.ENodeType.EXIT;
+		server.nodes[server.nodes.length - 3].name = "EXIT";
 
 		return server;
 	}

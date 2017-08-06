@@ -189,5 +189,12 @@ class CyberspaceController
 		updateNodeVisibility();
 		_state.redrawServer();
 	}
+
+	public static function gotoNextLevel()
+	{
+		var levelGen = new LevelGen();
+		var newServer = levelGen.generateServer(_server.difficulty + 1);
+		initLevel(newServer);
+	}
 	
 }

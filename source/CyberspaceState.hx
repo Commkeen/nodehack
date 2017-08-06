@@ -3,11 +3,6 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.text.FlxText;
-import flixel.ui.FlxButton;
-import flixel.math.FlxMath;
-import flixel.util.FlxColor;
-import flixel.math.FlxPoint;
 import nodehack.model.Action;
 import nodehack.model.Node;
 import nodehack.model.NodeConnection;
@@ -18,6 +13,7 @@ import flixel.group.FlxSpriteGroup;
 import nodehack.Color;
 import nodehack.controller.CyberspaceController;
 import nodehack.Enums.EAccess;
+import nodehack.Enums.ENodeType;
 using flixel.util.FlxSpriteUtil;
 
 /**
@@ -162,9 +158,14 @@ class CyberspaceState extends FlxState
 				selectNode(index);
 				if (FlxG.mouse.justPressed)
 				{
-					if (!CyberspaceController.getServer().nodes[_selectedNode].connected)
+					var node = CyberspaceController.getServer().nodes[_selectedNode];
+					if (!node.connected)
 					{
 						CyberspaceController.makeConnectAttempt(index);
+					}
+					else if (node.type == ENodeType.EXIT && node.connected)
+					{
+						CyberspaceController.gotoNextLevel();
 					}
 				}
 				

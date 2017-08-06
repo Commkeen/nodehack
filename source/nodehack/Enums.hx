@@ -11,6 +11,13 @@ package nodehack;
 		USER;
 		ROOT;
 	}
+
+enum ENodeType
+	{
+		NONE;
+		ENTRANCE;
+		EXIT;
+	}
  
  class Enums
 {
