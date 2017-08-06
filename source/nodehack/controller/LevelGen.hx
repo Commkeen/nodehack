@@ -89,15 +89,118 @@ class LevelGen
 			}
 		}
 
-		server.nodes[0].connected = true;
-		server.nodes[0].access = Enums.EAccess.ROOT;
-		server.nodes[0].type = Enums.ENodeType.ENTRANCE;
-		server.nodes[0].name = "PORT";
+		var entrance = server.nodes[0];
+		entrance.connected = true;
+		entrance.access = Enums.EAccess.ROOT;
+		entrance.type = Enums.ENodeType.ENTRANCE;
+		entrance.name = "PORT";
 
-		server.nodes[server.nodes.length - 3].type = Enums.ENodeType.EXIT;
-		server.nodes[server.nodes.length - 3].name = "EXIT";
+		var exit = server.nodes[server.nodes.length - 3];
+		exit.type = Enums.ENodeType.EXIT;
+		exit.name = "EXIT";
+
+		var criticalPath = getPathBetweenNodes(server, entrance, exit);
+		if (criticalPath == null)
+		{
+			throw "SOMETHING IN LEVEL GEN WENT HORRIBLY WRONG!";
+		}
+
+		//Get random connections, knock them out, if we can't reach the exit, put them back
+		var connectionsRemoved = 0;
+		var failures = 0;
+		while (connectionsRemoved < server.nodes.length * 2 && failures < 50)
+		{
+			var randomConnection = server.connections[_random.int(0,server.connections.length-1)];
+			server.connections.remove(randomConnection);
+			if (getPathBetweenNodes(server, entrance, randomConnection.node1) == null
+				|| getPathBetweenNodes(server, entrance, randomConnection.node2) == null)
+			{
+				server.connections.push(randomConnection);
+				failures++;
+			}
+			else
+			{
+				connectionsRemoved++;
+			}
+		}
 
 		return server;
 	}
 	
+	private static function getPathBetweenNodes(server:Server, source:Node, target:Node):Array<Node>
+	{
+		var distancesFromSource = new Map<Node, Int>();
+		var previousNodeFromSource = new Map<Node, Node>();
+		var unoptimizedNodes = server.nodes.copy();
+		var intMax:Int = 65535;
+
+		for (node in unoptimizedNodes)
+		{
+			distancesFromSource.set(node, intMax);
+			previousNodeFromSource.set(node, null);
+			if (node == source)
+			{
+				distancesFromSource[node] = 0;
+			}
+		}
+
+		var pathFound:Bool = false;
+		while (unoptimizedNodes.length > 0 && !pathFound)
+		{
+			var shortest:Int = intMax;
+			var nextNode = unoptimizedNodes[0];
+			for (node in unoptimizedNodes)
+			{
+				if (distancesFromSource[node] < shortest)
+				{
+					shortest = distancesFromSource[node];
+					nextNode = node;
+				}
+			}
+
+			if (shortest == intMax)
+			{
+				return null;
+			}
+			unoptimizedNodes.remove(nextNode);
+			if (nextNode == target)
+			{
+				pathFound = true;
+			}
+
+			for (neighbor in server.getAdjacentNodes(nextNode))
+			{
+				var nodeFound = false;
+				for (node in unoptimizedNodes)
+				{
+					if (node == neighbor)
+					{
+						nodeFound = true;
+						neighbor = node;
+						break;
+					}
+				}
+				if (nodeFound)
+				{
+					var newDistance = distancesFromSource[nextNode] + 1;
+					if (newDistance < distancesFromSource[neighbor])
+					{
+						distancesFromSource[neighbor] = newDistance;
+						previousNodeFromSource[neighbor] = nextNode;
+					}
+				}
+			}
+		}
+
+		var nodePath = new Array<Node>();
+		var nextNodeInFinalPath = target;
+		while (previousNodeFromSource[nextNodeInFinalPath] != null)
+		{
+			nodePath.push(nextNodeInFinalPath);
+			nextNodeInFinalPath = previousNodeFromSource[nextNodeInFinalPath];
+		}
+		nodePath.push(source);
+		nodePath.reverse();
+		return nodePath;
+	}
 }

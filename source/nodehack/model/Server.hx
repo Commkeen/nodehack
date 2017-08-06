@@ -38,5 +38,4 @@ class Server
 
 		return result;
 	}
-	
 }
