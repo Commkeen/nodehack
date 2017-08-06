@@ -15,6 +15,7 @@ class Node
 	public var access:EAccess;
 	public var connected:Bool;
 	public var visible:Bool;
+	public var moneyReward:Int;
 	
 	public function new(position:FlxPoint, name:String, ice:Ice) 
 	{
@@ -24,6 +25,7 @@ class Node
 		this.connected = false;
 		this.visible = false;
 		this.access = EAccess.NONE;
+		this.moneyReward = 0;
 	}
 	
 }

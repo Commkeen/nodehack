@@ -1,7 +1,7 @@
 package nodehack.view;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
-import flixel.util.FlxPoint;
+import flixel.math.FlxPoint;
 
 /**
  * ...

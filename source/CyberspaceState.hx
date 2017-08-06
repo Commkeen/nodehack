@@ -162,7 +162,10 @@ class CyberspaceState extends FlxState
 				selectNode(index);
 				if (FlxG.mouse.justPressed)
 				{
-					CyberspaceController.makeConnectAttempt(index);
+					if (!CyberspaceController.getServer().nodes[_selectedNode].connected)
+					{
+						CyberspaceController.makeConnectAttempt(index);
+					}
 				}
 				
 			}
@@ -185,6 +188,7 @@ class CyberspaceState extends FlxState
 	private function refreshActionButtons()
 	{
 		_ui.clearActionButtons();
+		return;
 		var selectedNode = CyberspaceController.getServer().nodes[_selectedNode];
 		if (selectedNode.connected)
 		{

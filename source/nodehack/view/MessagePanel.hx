@@ -1,7 +1,7 @@
 package nodehack.view;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
-import flixel.util.FlxPoint;
+import flixel.math.FlxPoint;
 import flixel.FlxSprite;
 
 /**
@@ -42,12 +42,6 @@ class MessagePanel extends FlxSpriteGroup
 		
 		for (i in 0..._queueLength)
 			_msgQueue.push("");
-		
-		printLine("This is my first message.");
-		printLine("This is my second message.");
-		printLine("This is my third message.");
-		printLine("This is my fourth message.");
-		printLine("This is my fifth message.");
 	}
 	
 	public function printLine(msg:String)

@@ -60,11 +60,11 @@ class LevelGen
 		server.difficulty = difficulty;
 		server.name = "A name";
 
-		var serversV = 4;
+		var serversV = 3;
 		var serversH = 6;
 		var spacingV = 130;
 		var spacingH = 130;
-		var topLeft = new FlxPoint(50, 50);
+		var topLeft = new FlxPoint(50, 190);
 
 		var i = 0;
 		for (x in 0...serversH)
@@ -74,6 +74,7 @@ class LevelGen
 				var node = new Node(new FlxPoint(topLeft.x + x*spacingH, topLeft.y + y*spacingV), "SVR", null);
 				server.nodes.push(node);
 				node.ice = new Ice("Default", _random.int(Std.int(Math.max(1, difficulty-1)), difficulty+1));
+				node.moneyReward = _random.int(difficulty*12, (difficulty+node.ice.strength*12));
 				if (y > 0)
 				{
 					var nodeAbove = server.nodes[i-1];
@@ -89,6 +90,7 @@ class LevelGen
 		}
 
 		server.nodes[0].connected = true;
+		server.nodes[0].access = Enums.EAccess.ROOT;
 
 		return server;
 	}

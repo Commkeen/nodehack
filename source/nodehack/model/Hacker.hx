@@ -6,10 +6,11 @@ package nodehack.model;
  */
 class Hacker
 {
+	public var money:Int;
 
 	public function new() 
 	{
-		
+		money = 0;
 	}
 	
 }

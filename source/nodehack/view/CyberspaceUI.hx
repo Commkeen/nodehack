@@ -7,6 +7,7 @@ import nodehack.Color;
 import nodehack.model.Action;
 import nodehack.model.Node;
 import nodehack.controller.CyberspaceController;
+import nodehack.controller.GameController;
 
 /**
  * ...
@@ -29,6 +30,7 @@ class CyberspaceUI extends FlxSpriteGroup
 	var _iceOverview:IceOverviewPanel;
 	var _timeBar:TimeBar;
 	var _keysDisplay:KeysDisplay;
+	var _moneyDisplay:MoneyDisplay;
 	var _mousePos:FlxText = new FlxText();
 	
 	public function new() 
@@ -85,6 +87,10 @@ class CyberspaceUI extends FlxSpriteGroup
 		_keysDisplay = new KeysDisplay();
 		_keysDisplay.setKeys(CyberspaceController.getKeys());
 		add(_keysDisplay);
+
+		_moneyDisplay = new MoneyDisplay();
+		_moneyDisplay.setMoney(GameController.getHacker().money);
+		add(_moneyDisplay);
 	}
 	
 	public function addActionButton(action:Action, x:Int, y:Int)
@@ -122,6 +128,7 @@ class CyberspaceUI extends FlxSpriteGroup
 		}
 		_timeBar.setTime(CyberspaceController.getTime());
 		_keysDisplay.setKeys(CyberspaceController.getKeys());
+		_moneyDisplay.setMoney(GameController.getHacker().money);
 	}
 	
 	public function updateSelectedNode(node:Node)

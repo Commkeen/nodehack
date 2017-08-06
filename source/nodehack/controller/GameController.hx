@@ -12,9 +12,15 @@ class GameController
 	
 	public static function initGame()
 	{
+		hacker = new Hacker();
 		var levelGen:LevelGen = new LevelGen();
 		var server = levelGen.generateServer(1);
 		CyberspaceController.initLevel(server);
+	}
+
+	public static function getHacker()
+	{
+		return hacker;
 	}
 	
 	

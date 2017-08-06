@@ -25,6 +25,7 @@ class NodeSprite extends FlxSpriteGroup
 	var _accessIcon:FlxSprite;
 	var _nodeStrength:FlxText;
 	var _nodeName:FlxText;
+	var _nodeReward:FlxText;
 	var _nodeIcon:FlxSprite;
 	
 	public function new(node:Node) 
@@ -41,21 +42,26 @@ class NodeSprite extends FlxSpriteGroup
 		
 		_accessIcon = new FlxSprite(8, 8);
 		_accessIcon.loadGraphic("assets/images/icons.png", true, 24, 24);
-		_accessIcon.scale = new FlxPoint(3,3);
+		_accessIcon.scale = new FlxPoint(1,1);
 		add(_accessIcon);
 		
-		_nodeName = new FlxText(30, 20, 0, node.name, Constants.UI_FONTSIZE);
+		_nodeName = new FlxText(12, 30, 0, node.name, Constants.UI_FONTSIZE);
 		_nodeName.font = Constants.UI_FONT;
 		_nodeName.color = Color.DARKEST;
 		add(_nodeName);
 		
-		_nodeStrength = new FlxText(30, 50, 0, "", Constants.UI_FONTSIZE);
+		_nodeStrength = new FlxText(38, 6, 0, "", Constants.UI_FONTSIZE);
 		_nodeStrength.font = Constants.UI_FONT;
 		_nodeStrength.color = Color.DARKEST;
 		add(_nodeStrength);
+
+		_nodeReward = new FlxText(38, 22, 0, "$" + node.moneyReward, Constants.UI_FONTSIZE);
+		_nodeReward.font = Constants.UI_FONT;
+		_nodeReward.color = Color.DARKEST;
+		add(_nodeReward);
 		
 		if (node.ice != null)
-			_nodeStrength.text = "" + node.ice.strength;
+			_nodeStrength.text = "ST " + node.ice.strength;
 		
 		redraw();
 	}
@@ -93,11 +99,13 @@ class NodeSprite extends FlxSpriteGroup
 		{
 			_nodeName.visible = false;
 			_nodeStrength.visible = true;
+			_nodeReward.visible = true;
 		}
 		else
 		{
 			_nodeName.visible = true;
 			_nodeStrength.visible = false;
+			_nodeReward.visible = false;
 		}
 	}
 	

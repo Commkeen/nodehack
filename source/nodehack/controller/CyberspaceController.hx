@@ -1,6 +1,7 @@
 package nodehack.controller;
 import nodehack.Enums.EAccess;
 import nodehack.model.*;
+import nodehack.states.GameOverState;
 import flixel.FlxG;
 
 /**
@@ -92,6 +93,8 @@ class CyberspaceController
 	public static function connectNode(index:Int)
 	{
 		_server.nodes[index].connected = true;
+		setNodeAccess(index, EAccess.USER);
+		GameController.getHacker().money += _server.nodes[index].moneyReward;
 		_state.printLine("Connection established.");
 		updateNodeVisibility();
 		_state.redrawServer();
@@ -122,6 +125,8 @@ class CyberspaceController
 		_time -= amount;
 		if (_time < 0)
 			_time = 0;
+		if (_time == 0)
+			FlxG.switchState(new GameOverState());
 	}
 	
 	public static function makeConnectAttempt(nodeIndex:Int)
@@ -132,6 +137,10 @@ class CyberspaceController
 		if (success)
 		{
 			connectNode(nodeIndex);
+		}
+		else
+		{
+			_state.printLine("Access denied.");
 		}
 	}
 
